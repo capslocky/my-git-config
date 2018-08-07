@@ -1,0 +1,152 @@
+[user]
+  name = Baur
+  email = atanov.b@gmail.com
+  signingkey = C5003DEE7A00EF60
+
+[github]
+  user = capslocky
+
+[alias]
+   s  = !git status -sb
+   f  = !git fetch origin --tags --prune && git s
+   b  = !git branch -v
+   st = !git add -A && git s
+   un = !git reset -q && git s
+  msg = "!f(){ git commit -m \"$*\"; }; f"
+ head = !git rev-parse --abbrev-ref HEAD
+ prev = !git rev-parse --abbrev-ref @{-1}
+  rel = !git branch -l | grep release | tail -1 && git branch -r | grep release | tail -1    # PROJECT-SPECIFIC
+    c = "!f(){ git checkout -q ${1}; git s; }; f"
+   co = "!f(){ git checkout --track origin/${1}; }; f"
+   cr = "!f(){ git checkout $(git rel | head -1); git s; }; f"                               # PROJECT-SPECIFIC
+  crr = "!f(){ git checkout --track $(git rel | tail -1); git s; }; f"                       # PROJECT-SPECIFIC
+   cp = !git checkout -q @{-1} && git s
+   cb = !git checkout -b
+   cd = !git checkout -q develop && git s
+   cm = !git checkout -q master && git s
+   ch = !git cherry-pick
+   ph = !git push -u origin HEAD
+   db = !git cm && git branch -d $(git prev)
+  dbf = !git cm && git branch -D $(git prev)
+   du = !git push origin --delete $(git head)
+   pf = !git push --force-with-lease
+   am = !git commit --amend --no-edit
+  amm = !git commit --amend
+   mu = !git merge @{u} --no-edit
+   md = !git merge origin/develop --no-edit
+   mc = !git merge --continue
+   ma = !git merge --abort
+   ru = !git rebase @{u}
+   rd = !git rebase origin/develop
+   rc = !git rebase --continue
+   ra = !git rebase --abort
+   ff = !git merge @{u} --ff-only && git l1 && git s
+  fff = !git f && git ff
+ noff = !git merge --no-ff --no-edit 
+ temp = !git add -A && git commit -m 'TEMP'
+ soft = !git reset --soft HEAD~1
+hardu = !git reset --hard @{u} && git l1 && git s
+
+   lp = !git log --pretty=format:\"%h - %an (%ar): %s\"
+   l  = !git lp -1
+   l1 = !echo '\nLast 10 commits:' && git lp HEAD~10..HEAD
+   l2 = !echo '\nLast 11-20 commits:' && git lp HEAD~20..HEAD~11
+   l3 = !echo '\nLast 21-30 commits:' && git lp HEAD~30..HEAD~21
+   l4 = !echo '\nLast 31-40 commits:' && git lp HEAD~40..HEAD~31
+   l5 = !echo '\nLast 41-50 commits:' && git lp HEAD~50..HEAD~41
+   lf = !git lp --follow
+   la = "!f(){ git lp -20 --author=\"${1-Baur}\"; }; f"
+   lm = "!f(){ git lp --grep \"${1-strange}\"; }; f"
+   lu = "!git lp \\'HEAD..@{u}\\'"
+
+  com = "!f(){ \
+left=${1:-origin/develop};\
+right=${2:-HEAD};\
+read leftCount rightCount <<< $(git rev-list --left-right --count $left...$right); echo;\
+echo "[$left] contains $leftCount unique commits" ;\
+echo "[$right] contains $rightCount unique commits" ;\
+if [[ $leftCount > 0 && $rightCount == 0 ]]; then echo "[$right] is parent for [$left]";\
+elif [[ $leftCount == 0 && $rightCount > 0 ]]; then echo "[$left] is parent for [$right]";\
+else echo "they dont refer one another"; fi;\
+}; f"
+
+   al = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/'
+
+debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PACK_ACCESS=2; GIT_TRACE_PACKET=2; GIT_TRACE_PACKFILE=2; GIT_TRACE_SETUP=2; GIT_TRACE_SHALLOW=2; git"
+
+# https://stackoverflow.com/a/39616600/985457
+   quote-string = "!read -r l; printf \\\"!; printf %s \"$l\" | sed 's/\\([\\\"]\\)/\\\\\\1/g'; printf \" #\\\"\\n\" #"
+   quote-string-undo = "!read -r l; printf %s \"$l\" | sed 's/\\\\\\([\\\"]\\)/\\1/g'; printf \"\\n\" #"
+
+
+
+[core]
+  editor = "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
+  
+[credential]
+  helper = manager
+  modalPrompt = false
+
+[gpg]
+  program = "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
+
+[commit]
+  gpgsign = true
+
+[color]
+  ui = auto
+    
+# https://git-scm.com/docs/git-config
+
+[pull]
+  ff = only
+#  rebase = true
+  
+[push]
+  default = upstream
+  followTags = true
+  
+[rebase]
+#  autosquash = true
+
+[merge]
+# ff = 
+  tool = vsdiffmerge
+  guitool = vsdiffmerge
+  conflictstyle = diff3
+
+[mergetool]
+  prompt = true
+  
+[mergetool "vsdiffmerge"]
+  cmd = 'C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/Common7/IDE/CommonExtensions/Microsoft/TeamFoundation/Team Explorer/vsdiffmerge.exe' $LOCAL $REMOTE $BASE $MERGED //ignorespace //m
+  keepbackup = false
+  trustexistcode = true
+
+[diff]
+  tool = vsdiffmerge
+  guitool = vsdiffmerge
+  mnemonicPrefix = true
+  renames = true
+  
+[difftool]
+  prompt = true
+  
+[difftool "vsdiffmerge"]
+  cmd = 'C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/Common7/IDE/CommonExtensions/Microsoft/TeamFoundation/Team Explorer/vsdiffmerge.exe' $LOCAL $REMOTE Source Target //ignorespace //t
+  keepbackup = false
+  trustexistcode = true
+  
+[log]
+  abbrevCommit = true
+  follow = true
+
+[rerere]
+  enabled = 1
+  autoupdate = 1
+
+  
+  # examples
+  # https://gist.github.com/tdd/470582
+  # https://gist.github.com/pksunkara/988716
+  # https://gist.github.com/robmiller/6018582
