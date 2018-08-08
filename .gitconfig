@@ -61,7 +61,7 @@ hardu = !git reset --hard @{u} && git l1 && git s
 
   com = "!f(){ \
 left=${1:-origin/develop};\
-right=${2:-HEAD};\
+right=${2:-$(git head)};\
 read leftCount rightCount <<< $(git rev-list --left-right --count $left...$right); echo;\
 echo "[$left] contains $leftCount unique commits" ;\
 echo "[$right] contains $rightCount unique commits" ;\
