@@ -4,12 +4,12 @@
 
 Alias | Description
 --- | ---
-git s  | Show current branch and ahead/behind status
+git s | Show current branch and ahead/behind status
 git f | Fetch remote repository
 git b | Show local branches
 git st  | Stage all changes
 git un  | Unstage all changes
-git msg Fixed button | Create a commit with given text (no braces needed!)
+git m Fixed button | Create a commit with given message (no quotation marks needed!)
 git head | Show current branch name
 git prev | Show previous branch name 
 git rel |  Show last local and remote release branches (project-specific)
@@ -19,14 +19,14 @@ git cr | Checkout last local release branch (project-specific)
 git crr | Checkout last remote release branch (project-specific)
 git cp | Checkout previous branch
 git cb  baur/ASD-342  | Create and checkout new branch
-git cd |  Checkout branch 'develop'
-git cm | Checkout branch 'master'
+git cd |  Checkout 'develop' branch
+git cm | Checkout 'master' branch
 git ch 355c3ad | Cherry-pick commit 355c3ad
-git ph | Push head (create new remote branch)
+git ph | Push head (create new branch on remote)
+git pf | Push force
 git db |  Delete current branch with switching to 'master'
 git dbf | The same, but force
-git du | Delete upstream (remote branch)
-git pf | Push force
+git dr | Delete remote branch (upstream)
 git am | Amend last commit from staging
 git amm | The same but with message editing
 git mu |  Merge upstream
@@ -40,8 +40,8 @@ git ra |  Rebase abort
 git ff |  Fast-forward to upstream
 git fff |  Fetch and fast-forward to upstream
 git noff baur/ASD-335 |  Merge 'baur/ASD-335' without fast-forward
-git temp |  Create 'TEMP' commit with all uncommited changes
-git soft |  Disassemble last commit into staging
+git temp |  Create 'TEMP' commit from all uncommited changes
+git soft |  Disassemble last commit into staging (typically to reverse 'git temp')
 git hardu | Do a hard reset of current branch to upstream
 git lp | Log with pretty format
 git l  |  Show last commit
@@ -67,7 +67,7 @@ git debug lm 'one more' | Show tracing info for given git command
 Type | Location
 --- | ---
 Repository-specific | my-project/.git/config
-User-global location | echo $HOME
+Show user-global location | echo $HOME
 User-global on Linux, Mac | ~/.gitconfig
 User-global on Windows | C:\Users\UserName\\.gitconfig
 The same | %UserProfile%\\.gitconfig
