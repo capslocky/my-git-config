@@ -7,6 +7,7 @@
   user = capslocky
 
 [alias]
+   v  = !git --version
    s  = !git status -sb
    f  = !git fetch origin --tags --prune && git s
    b  = !git branch -v
@@ -25,18 +26,22 @@
    cd = !git checkout -q develop && git s
    cm = !git checkout -q master && git s
    ch = !git cherry-pick
+  chc = !git cherry-pick --continue
+  cha = !git cherry-pick --abort
    ph = !git push -u origin HEAD
    pf = !git push --force-with-lease
    db = !git cm && git branch -d $(git prev)
   dbf = !git cm && git branch -D $(git prev)
    dr = !git push origin --delete $(git head)
-   am = !git commit --amend --no-edit
+  amn = !git commit --amend --no-edit
   amm = !git commit --amend
-   mu = !git merge @{u} --no-edit
+   mu = !git merge @{u} --no-ff --no-edit
+   mp = !git merge @{-1}  --no-edit
    md = !git merge origin/develop --no-edit
    mc = !git merge --continue
    ma = !git merge --abort
    ru = !git rebase @{u}
+   rp = !git rebase @{-1}
    rd = !git rebase origin/develop
    rc = !git rebase --continue
    ra = !git rebase --abort
@@ -47,7 +52,10 @@
  soft = !git reset --soft HEAD~1
 hardu = !git reset --hard @{u} && git l1 && git s
 
-   lp = !git log --pretty=format:\"%h - %an (%ar): %s\"
+ rudf = !git reset HEAD~1 -- SQL/UDF.xml && git checkout -- SQL/UDF.xml                      # PROJECT-SPECIFIC
+
+
+   lp = !git log --first-parent --pretty=format:\"%h - %<(20)%an | %<(14)%ar | %s\"
    l  = !git lp -1
    l1 = !echo '\nLast 10 commits:' && git lp HEAD~10..HEAD
    l2 = !echo '\nLast 11-20 commits:' && git lp HEAD~20..HEAD~11
@@ -57,7 +65,8 @@ hardu = !git reset --hard @{u} && git l1 && git s
    lf = !git lp --follow
    la = "!f(){ git lp -20 --author=\"${1-Baur}\"; }; f"
    lm = "!f(){ git lp --grep \"${1-strange}\"; }; f"
-   lu = "!git lp \\'HEAD..@{u}\\'"
+   lu = !git lp HEAD..@{u}
+   
 
   com = "!f(){ \
 left=${1:-origin/develop};\

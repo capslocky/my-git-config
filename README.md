@@ -4,6 +4,7 @@
 
 Alias | Description
 --- | ---
+git v | Show git version
 git s | Show current branch and ahead/behind status
 git f | Fetch remote repository
 git b | Show local branches
@@ -22,18 +23,22 @@ git cb  baur/ASD-342  | Create and checkout new branch
 git cd |  Checkout 'develop' branch
 git cm | Checkout 'master' branch
 git ch 355c3ad | Cherry-pick commit 355c3ad
+git chc | Cherry-pick continue
+git cha | Cherry-pick abort
 git ph | Push head (create new branch on remote)
 git pf | Push force
 git db |  Delete current branch with switching to 'master'
 git dbf | The same, but force
 git dr | Delete remote branch (upstream)
-git am | Amend last commit from staging
+git amn | Amend last commit from staging
 git amm | The same but with message editing
-git mu |  Merge upstream
+git mu |  Merge upstream, no fast-forward
+git mp |  Merge previous branch
 git md |  Merge origin/develop
 git mc |  Merge continue
 git ma | Merge abort
 git ru | Rebase on upstream
+git rp | Rebase on previous branch
 git rd | Rebase on origin/develop
 git rc | Rebase continue
 git ra |  Rebase abort
@@ -43,6 +48,7 @@ git noff baur/ASD-335 |  Merge 'baur/ASD-335' without fast-forward
 git temp |  Create 'TEMP' commit from all uncommited changes
 git soft |  Disassemble last commit into staging (typically to reverse 'git temp')
 git hardu | Do a hard reset of current branch to upstream
+git rudf | Discard any changes in file 'SQL/UDF.xml' (project-specific)
 git lp | Log with pretty format
 git l  |  Show last commit
 git l1 |  Show last 10 commits
