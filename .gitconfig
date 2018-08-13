@@ -52,7 +52,7 @@
  soft = !git reset --soft HEAD~1
 hardu = !git reset --hard @{u} && git l1 && git s
 
- rudf = !git reset HEAD~1 -- SQL/UDF.xml && git checkout -- SQL/UDF.xml                      # PROJECT-SPECIFIC
+  udf = !git reset HEAD~1 -- SQL/UDF.xml && git checkout -- SQL/UDF.xml                      # PROJECT-SPECIFIC
 
 
    lp = !git log --first-parent --pretty=format:\"%h - %<(20)%an | %<(14)%ar | %s\"

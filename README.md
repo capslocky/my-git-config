@@ -48,7 +48,7 @@ git noff baur/ASD-335 |  Merge 'baur/ASD-335' without fast-forward
 git temp |  Create 'TEMP' commit from all uncommited changes
 git soft |  Disassemble last commit into staging (typically to reverse 'git temp')
 git hardu | Do a hard reset of current branch to upstream
-git rudf | Discard any changes in file 'SQL/UDF.xml' (project-specific)
+git udf | Discard any changes in file 'SQL/UDF.xml' (project-specific)
 git lp | Log with pretty format
 git l  |  Show last commit
 git l1 |  Show last 10 commits
