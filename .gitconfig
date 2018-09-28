@@ -25,6 +25,7 @@
    cb = !git checkout -b
    cd = !git checkout -q develop && git s
    cm = !git checkout -q master && git s
+   ct = !git branch -D temp && git checkout -b temp
    ch = !git cherry-pick
   chc = !git cherry-pick --continue
   cha = !git cherry-pick --abort
@@ -36,8 +37,10 @@
   amn = !git commit --amend --no-edit
   amm = !git commit --amend
    mu = !git merge @{u} --no-ff --no-edit
-   mp = !git merge @{-1}  --no-edit
+   mp = !git merge @{-1} --no-ff --no-edit
    md = !git merge origin/develop --no-edit
+   mm = !git merge origin/master --no-edit
+   mt = !git merge temp --no-edit
    mc = !git merge --continue
    ma = !git merge --abort
    ru = !git rebase @{u}
@@ -45,15 +48,22 @@
    rd = !git rebase origin/develop
    rc = !git rebase --continue
    ra = !git rebase --abort
+   ri = !git rebase -i
    ff = !git merge @{u} --ff-only && git l1 && git s
   fff = !git f && git ff
+  ffd = !git fetch . origin/develop:develop
  noff = !git merge --no-ff --no-edit 
- temp = !git add -A && git commit -m 'TEMP'
+ temp = !git add -A && git commit -m 'TEMP commit'
  soft = !git reset --soft HEAD~1
 hardu = !git reset --hard @{u} && git l1 && git s
+  cat = !git cat-file -p
+  
+  time = !date +"%Y-%m-%d_%H-%M-%S"
 
-  udf = !git reset HEAD~1 -- SQL/UDF.xml && git checkout -- SQL/UDF.xml                      # PROJECT-SPECIFIC
 
+ udfh = !git reset HEAD~1 -- SQL/UDF.xml && git checkout HEAD -- SQL/UDF.xml                 # PROJECT-SPECIFIC
+ udfd = !git checkout origin/develop -- SQL/UDF.xml                                          # PROJECT-SPECIFIC
+ 
 
    lp = !git log --first-parent --pretty=format:\"%h - %<(20)%an | %<(14)%ar | %s\"
    l  = !git lp -1
@@ -62,11 +72,29 @@ hardu = !git reset --hard @{u} && git l1 && git s
    l3 = !echo '\nLast 21-30 commits:' && git lp HEAD~30..HEAD~21
    l4 = !echo '\nLast 31-40 commits:' && git lp HEAD~40..HEAD~31
    l5 = !echo '\nLast 41-50 commits:' && git lp HEAD~50..HEAD~41
-   lf = !git lp --follow
-   la = "!f(){ git lp -20 --author=\"${1-Baur}\"; }; f"
-   lm = "!f(){ git lp --grep \"${1-strange}\"; }; f"
    lu = !git lp HEAD..@{u}
+   ll = !git lp @{u}..HEAD
+   lf = !git lp --follow
+   la = "!f(){ git lp -20 --all --author=\"${1-Baur}\"; }; f"
+   lm = "!f(){ git lp --grep \"${1-strange}\"; }; f"
+   lw = !git lp --author=Baur --all --since='1 week ago'
+
+
+
+
+ back = "!f(){ \
+name=$(git head)-backup/$(git time);\
+git branch $name;\
+echo $name;\
+}; f"
    
+   
+ copy = "!f(){ \
+commit_hash=$(git commit-tree ${1}^{tree} -p HEAD -m \"Tree copy from ${1}\");\
+git merge $commit_hash;\
+echo "Result commit is: $commit_hash";\
+}; f"
+
 
   com = "!f(){ \
 left=${1:-origin/develop};\
@@ -79,9 +107,11 @@ elif [[ $leftCount == 0 && $rightCount > 0 ]]; then echo "[$left] is parent for 
 else echo "they dont refer one another"; fi;\
 }; f"
 
+ conf = !git config --global --edit
    al = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/'
 
 debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PACK_ACCESS=2; GIT_TRACE_PACKET=2; GIT_TRACE_PACKFILE=2; GIT_TRACE_SETUP=2; GIT_TRACE_SHALLOW=2; git"
+
 
 # https://stackoverflow.com/a/39616600/985457
    quote-string = "!read -r l; printf \\\"!; printf %s \"$l\" | sed 's/\\([\\\"]\\)/\\\\\\1/g'; printf \" #\\\"\\n\" #"
@@ -91,6 +121,8 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
 
 [core]
   editor = "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
+  whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
+#   excludesfile = 
   
 [credential]
   helper = manager
@@ -106,6 +138,9 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
   ui = auto
     
 # https://git-scm.com/docs/git-config
+
+[gc]
+  auto = 0
 
 [pull]
   ff = only

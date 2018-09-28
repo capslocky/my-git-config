@@ -22,51 +22,63 @@ git cp | Checkout previous branch
 git cb  baur/ASD-342  | Create and checkout new branch
 git cd |  Checkout 'develop' branch
 git cm | Checkout 'master' branch
+git ct | Checkout new 'temp' branch here (along with deleting old 'temp' branch)
 git ch 355c3ad | Cherry-pick commit 355c3ad
 git chc | Cherry-pick continue
 git cha | Cherry-pick abort
 git ph | Push head (create new branch on remote)
 git pf | Push force
-git db |  Delete current branch with switching to 'master'
+git db | Delete current branch with switching to 'master'
 git dbf | The same, but force
 git dr | Delete remote branch (upstream)
 git amn | Amend last commit from staging
 git amm | The same but with message editing
-git mu |  Merge upstream, no fast-forward
-git mp |  Merge previous branch
-git md |  Merge origin/develop
-git mc |  Merge continue
+git mu | Merge upstream, no fast-forward
+git mp | Merge previous branch, no fast-forward
+git md | Merge 'origin/develop'
+git mm | Merge 'origin/master'
+git mt | Merge 'temp' branch
+git mc | Merge continue
 git ma | Merge abort
 git ru | Rebase on upstream
 git rp | Rebase on previous branch
 git rd | Rebase on origin/develop
 git rc | Rebase continue
-git ra |  Rebase abort
-git ff |  Fast-forward to upstream
-git fff |  Fetch and fast-forward to upstream
+git ra | Rebase abort
+git ri e9b838e | Start interactive rebase
+git ff | Fast-forward current branch to upstream
+git fff | Fetch and fast-forward to upstream
+git ffd | Fast-forward 'develop' before switching to it
 git noff baur/ASD-335 |  Merge 'baur/ASD-335' without fast-forward
-git temp |  Create 'TEMP' commit from all uncommited changes
-git soft |  Disassemble last commit into staging (typically to reverse 'git temp')
+git temp | Create 'TEMP commit' from all uncommited changes
+git soft | Disassemble last commit into staging (typically to reverse 'git temp')
 git hardu | Do a hard reset of current branch to upstream
-git udf | Discard any changes in file 'SQL/UDF.xml' (project-specific)
+git cat d2f54a0 | Show commit metadata
+git time | Show date '2018-09-28_12-04-41' (used in 'git back')
+git udfh | Discard any changes in file 'SQL/UDF.xml' during merge conflict (project-specific)
+git udfd | Reset file 'SQL/UDF.xml' to 'origin/develop' state (project-specific)
 git lp | Log with pretty format
-git l  |  Show last commit
-git l1 |  Show last 10 commits
+git l  | Show last commit
+git l1 | Show last 10 commits
 git l2 | Show last 11-20 commits
-git l3 |  Show last 21-30 commits
+git l3 | Show last 21-30 commits
 git l4 | Show last 31-40 commits
-git l5 |  Show last 41-50 commits
+git l5 | Show last 41-50 commits
+git lu | Show new remote commits from upstream (behind)
+git ll | Show new local commits yet to be pushed (ahead)
 git lf *tsconfig.json | Show all commits affecting file 'tsconfig.json'
 git la Alex |  Show all commits authored by 'Alex'
 git lm 'one more' | Show all commits with message 'one more'
-git lu |  Show all new commits in upstream
+git lw | Show all my commits from last week
+git back | Create (but not switch) 'my-branch-backup/2018-09-28_12-07-55'
+git copy 8e92d6b | Add new commit 'Tree copy from 8e92d6b'
 git com | Compare current branch with 'origin/develop'
 git com baur/alpha |  Compare current branch with 'baur/alpha'
 git com baur/alpha origin/baur/beta |   Compare 'baur/alpha' with 'origin/baur/beta'
 git com a17dd93 165db4a | Compare two given commits
 git al | Show all aliases
 git debug lm 'one more' | Show tracing info for given git command
-
+git conf | Edit global config file
 
 ## config location ##
 
