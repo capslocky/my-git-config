@@ -23,8 +23,8 @@
   crr = "!f(){ git checkout --track $(git rel | tail -1); git s; }; f"                       # PROJECT-SPECIFIC
    cp = !git checkout -q @{-1} && git s
    cb = !git checkout -b
-   cd = !git checkout -q develop && git s
-   cm = !git checkout -q master && git s
+   cd = !git ffd && git checkout -q develop && git s
+   cm = !git ffm && git checkout -q master && git s
    ct = !git branch -D temp && git checkout -b temp
    ch = !git cherry-pick
   chc = !git cherry-pick --continue
@@ -46,12 +46,14 @@
    ru = !git rebase @{u}
    rp = !git rebase @{-1}
    rd = !git rebase origin/develop
+  rdt = !git rebase origin/develop -X theirs
    rc = !git rebase --continue
    ra = !git rebase --abort
    ri = !git rebase -i
    ff = !git merge @{u} --ff-only && git l1 && git s
   fff = !git f && git ff
   ffd = !git fetch . origin/develop:develop
+  ffm = !git fetch . origin/master:master
  noff = !git merge --no-ff --no-edit 
  temp = !git add -A && git commit -m 'TEMP commit'
  soft = !git reset --soft HEAD~1
@@ -80,20 +82,14 @@ hardu = !git reset --hard @{u} && git l1 && git s
    lw = !git lp --author=Baur --all --since='1 week ago'
 
 
-
-
  back = "!f(){ \
 name=$(git head)-backup/$(git time);\
 git branch $name;\
 echo $name;\
-}; f"
-   
-   
- copy = "!f(){ \
-commit_hash=$(git commit-tree ${1}^{tree} -p HEAD -m \"Tree copy from ${1}\");\
-git merge $commit_hash;\
-echo "Result commit is: $commit_hash";\
-}; f"
+}; f" 
+
+
+ copy = "!f(){ git merge $(git commit-tree ${1}^{tree} -p HEAD -m \"Tree copy from ${1}\"); }; f"
 
 
   com = "!f(){ \
@@ -188,7 +184,11 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
 [rerere]
   enabled = 1
   autoupdate = 1
-
+  # to clear rr cache
+  # rm -r .git/rr-cache
+  # introduce as alias?
+  
+  
   
   # examples
   # https://gist.github.com/tdd/470582

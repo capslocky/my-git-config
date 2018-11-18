@@ -6,7 +6,7 @@ Alias | Description
 --- | ---
 git v | Show git version
 git s | Show current branch and ahead/behind status
-git f | Fetch remote repository
+git f | Fetch remote repository 'origin'
 git b | Show local branches
 git st  | Stage all changes
 git un  | Unstage all changes
@@ -14,15 +14,15 @@ git m Fixed button | Create a commit with given message (no quotation marks need
 git head | Show current branch name
 git prev | Show previous branch name 
 git rel |  Show last local and remote release branches (project-specific)
-git c baur/ASD-321 | Checkout existing local branch
-git co baur/ASD-335 | Checkout branch from origin
+git c john/ASD-321 | Checkout existing local branch
+git co john/ASD-475 | Checkout remote branch from origin
+git cb  john/ASD-557 | Create and checkout new branch
 git cr | Checkout last local release branch (project-specific)
 git crr | Checkout last remote release branch (project-specific)
 git cp | Checkout previous branch
-git cb  baur/ASD-342  | Create and checkout new branch
-git cd |  Checkout 'develop' branch
-git cm | Checkout 'master' branch
-git ct | Checkout new 'temp' branch here (along with deleting old 'temp' branch)
+git cd | Fast-forward and checkout 'develop' branch
+git cm | Fast-forward and checkout 'master' branch
+git ct | Checkout 'temp' branch here (with deleting previous 'temp' location, if there is no - 'git cb temp')
 git ch 355c3ad | Cherry-pick commit 355c3ad
 git chc | Cherry-pick continue
 git cha | Cherry-pick abort
@@ -43,13 +43,15 @@ git ma | Merge abort
 git ru | Rebase on upstream
 git rp | Rebase on previous branch
 git rd | Rebase on origin/develop
+git rdt | Rebase on origin/develop automatically resolving conflicts with 'theirs' (current feature branch)
 git rc | Rebase continue
 git ra | Rebase abort
 git ri e9b838e | Start interactive rebase
 git ff | Fast-forward current branch to upstream
 git fff | Fetch and fast-forward to upstream
-git ffd | Fast-forward 'develop' before switching to it
-git noff baur/ASD-335 |  Merge 'baur/ASD-335' without fast-forward
+git ffd | Fast-forward 'develop' (without checkout)
+git ffm | Fast-forward 'master' (without checkout)
+git noff john/ASD-335 |  Merge 'john/ASD-335', no fast-forward
 git temp | Create 'TEMP commit' from all uncommited changes
 git soft | Disassemble last commit into staging (typically to reverse 'git temp')
 git hardu | Do a hard reset of current branch to upstream
@@ -70,15 +72,24 @@ git lf *tsconfig.json | Show all commits affecting file 'tsconfig.json'
 git la Alex |  Show all commits authored by 'Alex'
 git lm 'one more' | Show all commits with message 'one more'
 git lw | Show all my commits from last week
-git back | Create (but not switch) 'my-branch-backup/2018-09-28_12-07-55'
+git back | Create (without checkout) 'my-branch-backup/2018-09-28_12-07-55'
 git copy 8e92d6b | Add new commit 'Tree copy from 8e92d6b'
 git com | Compare current branch with 'origin/develop'
-git com baur/alpha |  Compare current branch with 'baur/alpha'
-git com baur/alpha origin/baur/beta |   Compare 'baur/alpha' with 'origin/baur/beta'
+git com john/alpha |  Compare current branch with 'john/alpha'
+git com john/alpha origin/john/beta |   Compare 'john/alpha' with 'origin/john/beta'
 git com a17dd93 165db4a | Compare two given commits
 git al | Show all aliases
 git debug lm 'one more' | Show tracing info for given git command
 git conf | Edit global config file
+
+
+## alias combos ##
+
+Commands | Description
+--- | ---
+git f <br> git ct <br> git md <br> #resolve&nbsp;conflicts <br> git mc <br> git cp <br> git rdt <br> git copy temp <br> git amm | Perform rebase of current branch on 'origin/develop' dealing only with final merge conflicts. This method is a less pain alternative to classic rebase when you have conflicts on multiple commits.
+git cd <br> git mp | Merge current branch into 'develop'
+
 
 ## config location ##
 
