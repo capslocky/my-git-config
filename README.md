@@ -11,6 +11,7 @@ git b | Show local branches
 git st  | Stage all changes
 git un  | Unstage all changes
 git m Fixed button | Create a commit with given message (no quotation marks needed!)
+git mj Fixed button | The same, but with prefix like 'ASD-335: '
 git head | Show current branch name
 git prev | Show previous branch name 
 git rel |  Show last local and remote release branches (project-specific)
@@ -22,7 +23,7 @@ git crr | Checkout last remote release branch (project-specific)
 git cp | Checkout previous branch
 git cd | Fast-forward and checkout 'develop' branch
 git cm | Fast-forward and checkout 'master' branch
-git ct | Checkout 'temp' branch here (with deleting previous 'temp' location, if there is no - 'git cb temp')
+git ct | Checkout 'temp' branch here
 git ch 355c3ad | Cherry-pick commit 355c3ad
 git chc | Cherry-pick continue
 git cha | Cherry-pick abort
@@ -31,6 +32,8 @@ git pf | Push force
 git db | Delete current branch with switching to 'master'
 git dbf | The same, but force
 git dr | Delete remote branch (upstream)
+git dh | Show diff between working copy and head
+git ds | Show diff between staging and head
 git amn | Amend last commit from staging
 git amm | The same but with message editing
 git mu | Merge upstream, no fast-forward
@@ -43,7 +46,7 @@ git ma | Merge abort
 git ru | Rebase on upstream
 git rp | Rebase on previous branch
 git rd | Rebase on origin/develop
-git rdt | Rebase on origin/develop automatically resolving conflicts with 'theirs' (current feature branch)
+git rdt | Rebase on origin/develop automatically resolving conflicts with 'theirs' <br> (taking changes from current branch)
 git rc | Rebase continue
 git ra | Rebase abort
 git ri e9b838e | Start interactive rebase
@@ -78,6 +81,7 @@ git com | Compare current branch with 'origin/develop'
 git com john/alpha |  Compare current branch with 'john/alpha'
 git com john/alpha origin/john/beta |   Compare 'john/alpha' with 'origin/john/beta'
 git com a17dd93 165db4a | Compare two given commits
+git rvm | Start 'rebase via merge' script
 git al | Show all aliases
 git debug lm 'one more' | Show tracing info for given git command
 git conf | Edit global config file
@@ -88,6 +92,7 @@ git conf | Edit global config file
 Commands | Description
 --- | ---
 git f <br> git ct <br> git md <br> #resolve&nbsp;conflicts <br> git mc <br> git cp <br> git rdt <br> git copy temp <br> git amm | Perform rebase of current branch on 'origin/develop' dealing only with final merge conflicts. This method is a less pain alternative to classic rebase when you have conflicts on multiple commits.
+git rvm | The same but with script
 git cd <br> git mp | Merge current branch into 'develop'
 
 

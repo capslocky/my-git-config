@@ -14,18 +14,19 @@
    st = !git add -A && git s
    un = !git reset -q && git s
    m  = "!f(){ git commit -m \"$*\"; }; f"
+   mj = "!f(){ git commit -m \"$(git head | cut -c6-14): $*\"; }; f"                                   # PROJECT-SPECIFIC
  head = !git rev-parse --abbrev-ref HEAD
  prev = !git rev-parse --abbrev-ref @{-1}
-  rel = !git branch -l | grep release | tail -1 && git branch -r | grep release | tail -1    # PROJECT-SPECIFIC
+  rel = !git branch -l | grep release/rc-1 | tail -1 && git branch -r | grep release/rc-1 | tail -1    # PROJECT-SPECIFIC
    c  = "!f(){ git checkout -q ${1}; git s; }; f"
    co = "!f(){ git checkout --track origin/${1}; }; f"
-   cr = "!f(){ git checkout $(git rel | head -1); git s; }; f"                               # PROJECT-SPECIFIC
-  crr = "!f(){ git checkout --track $(git rel | tail -1); git s; }; f"                       # PROJECT-SPECIFIC
+   cr = "!f(){ git checkout $(git rel | head -1); git s; }; f"                                         # PROJECT-SPECIFIC
+  crr = "!f(){ git checkout --track $(git rel | tail -1); git s; }; f"                                 # PROJECT-SPECIFIC
    cp = !git checkout -q @{-1} && git s
    cb = !git checkout -b
    cd = !git ffd && git checkout -q develop && git s
    cm = !git ffm && git checkout -q master && git s
-   ct = !git branch -D temp && git checkout -b temp
+   ct = !git checkout -B temp
    ch = !git cherry-pick
   chc = !git cherry-pick --continue
   cha = !git cherry-pick --abort
@@ -34,6 +35,8 @@
    db = !git cm && git branch -d $(git prev)
   dbf = !git cm && git branch -D $(git prev)
    dr = !git push origin --delete $(git head)
+   dh = !git diff HEAD
+   ds = !git diff --staged
   amn = !git commit --amend --no-edit
   amm = !git commit --amend
    mu = !git merge @{u} --no-ff --no-edit
@@ -81,6 +84,7 @@ hardu = !git reset --hard @{u} && git l1 && git s
    lm = "!f(){ git lp --grep \"${1-strange}\"; }; f"
    lw = !git lp --author=Baur --all --since='1 week ago'
 
+  rvm = !sh /d/GitHub/git-rebase-via-merge/git-rebase-via-merge.sh
 
  back = "!f(){ \
 name=$(git head)-backup/$(git time);\
@@ -182,12 +186,11 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
   follow = true
 
 [rerere]
-  enabled = 1
+  enabled = 0
   autoupdate = 1
   # to clear rr cache
   # rm -r .git/rr-cache
-  # introduce as alias?
-  
+  # introduce as alias?  
   
   
   # examples
