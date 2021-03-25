@@ -4,10 +4,13 @@
 
 Alias | Description
 --- | ---
+git me | Show my username and email
+git or | Show origin url
 git v | Show git version
 git s | Show current branch and ahead/behind status
 git f | Fetch remote repository 'origin'
 git b | Show local branches
+git br | Show remote branches
 git st  | Stage all changes
 git un  | Unstage all changes
 git m Fixed button | Create a commit with given message (no quotation marks needed!)
@@ -17,7 +20,7 @@ git prev | Show previous branch name
 git rel |  Show last local and remote release branches (project-specific)
 git c john/ASD-321 | Checkout existing local branch
 git co john/ASD-475 | Checkout remote branch from origin
-git cb  john/ASD-557 | Create and checkout new branch
+git cn  john/ASD-557 | Create and checkout new branch
 git cr | Checkout last local release branch (project-specific)
 git crr | Checkout last remote release branch (project-specific)
 git cp | Checkout previous branch
@@ -31,9 +34,11 @@ git ph | Push head (create new branch on remote)
 git pf | Push force
 git db | Delete current branch with switching to 'master'
 git dbf | The same, but force
-git dr | Delete remote branch (upstream)
-git dh | Show diff between working copy and head
-git ds | Show diff between staging and head
+git dr | Delete remote branch (upstream) for current branch
+git du | Show only unstaged changes (diff between working copy and staging)
+git ds | Show only staged changes (diff between staging and head)
+git da | Show all uncommited changes (diff between working copy and head)
+git df | Show file change statistics
 git amn | Amend last commit from staging
 git amm | The same but with message editing
 git mu | Merge upstream, no fast-forward
@@ -46,7 +51,7 @@ git ma | Merge abort
 git ru | Rebase on upstream
 git rp | Rebase on previous branch
 git rd | Rebase on origin/develop
-git rdt | Rebase on origin/develop automatically resolving conflicts with 'theirs' <br> (taking changes from current branch)
+git rdt | Rebase on origin/develop automatically resolving conflicts with 'theirs' <br> (taking our changes from current branch)
 git rc | Rebase continue
 git ra | Rebase abort
 git ri e9b838e | Start interactive rebase
@@ -74,17 +79,18 @@ git ll | Show new local commits yet to be pushed (ahead)
 git lf *tsconfig.json | Show all commits affecting file 'tsconfig.json'
 git la Alex |  Show all commits authored by 'Alex'
 git lm 'one more' | Show all commits with message 'one more'
-git lw | Show all my commits from last week
-git back | Create (without checkout) 'my-branch-backup/2018-09-28_12-07-55'
-git copy 8e92d6b | Add new commit 'Tree copy from 8e92d6b'
+git lw | Show all my commits since last week
+git back | Create backup branch (without checking it out) 'my-branch-backup/2018-09-28_12-07-55'
+git copy 8e92d6b | Make current branch exact as given commit by adding new commit 'Tree copy from 8e92d6b'
 git com | Compare current branch with 'origin/develop'
-git com john/alpha |  Compare current branch with 'john/alpha'
-git com john/alpha origin/john/beta |   Compare 'john/alpha' with 'origin/john/beta'
+git com john/alpha | Compare current branch with 'john/alpha'
+git com john/alpha origin/john/beta | Compare 'john/alpha' with 'origin/john/beta'
 git com a17dd93 165db4a | Compare two given commits
 git rvm | Start 'rebase via merge' script
-git al | Show all aliases
 git debug lm 'one more' | Show tracing info for given git command
-git conf | Edit global config file
+git con | Edit local config file
+git cong | Edit global config file
+git al | Show all aliases
 
 
 ## alias combos ##
@@ -100,9 +106,10 @@ git cd <br> git mp | Merge current branch into 'develop'
 
 Type | Location
 --- | ---
-Repository-specific | my-project/.git/config
+Repository-specific (local) | my-project/.git/config
+Edit local config file | git config --local --edit
 Show user-global location | echo $HOME
 User-global on Linux, Mac | ~/.gitconfig
 User-global on Windows | C:\Users\UserName\\.gitconfig
 The same | %UserProfile%\\.gitconfig
-Edit config file | git config --global --edit
+Edit global config file | git config --global --edit

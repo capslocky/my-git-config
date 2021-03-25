@@ -1,16 +1,19 @@
 [user]
   name = Baur
-  email = atanov.b@gmail.com
-  signingkey = C5003DEE7A00EF60
+  email = xxx
+#  signingkey = xxx
 
 [github]
   user = capslocky
 
 [alias]
+  me  = !git config user.name && git config user.email 
+  or  = !git config remote.origin.url
    v  = !git --version
    s  = !git status -sb
    f  = !git fetch origin --tags --prune && git s
-   b  = !git branch -v
+   b  = !git branch -lv
+   br = !git branch -rv
    st = !git add -A && git s
    un = !git reset -q && git s
    m  = "!f(){ git commit -m \"$*\"; }; f"
@@ -20,10 +23,10 @@
   rel = !git branch -l | grep release/rc-1 | tail -1 && git branch -r | grep release/rc-1 | tail -1    # PROJECT-SPECIFIC
    c  = "!f(){ git checkout -q ${1}; git s; }; f"
    co = "!f(){ git checkout --track origin/${1}; }; f"
+   cn = !git checkout -b
    cr = "!f(){ git checkout $(git rel | head -1); git s; }; f"                                         # PROJECT-SPECIFIC
   crr = "!f(){ git checkout --track $(git rel | tail -1); git s; }; f"                                 # PROJECT-SPECIFIC
    cp = !git checkout -q @{-1} && git s
-   cb = !git checkout -b
    cd = !git ffd && git checkout -q develop && git s
    cm = !git ffm && git checkout -q master && git s
    ct = !git checkout -B temp
@@ -35,8 +38,10 @@
    db = !git cm && git branch -d $(git prev)
   dbf = !git cm && git branch -D $(git prev)
    dr = !git push origin --delete $(git head)
-   dh = !git diff HEAD
+   du = !git diff
    ds = !git diff --staged
+   da = !git diff HEAD
+   df = !git diff --stat
   amn = !git commit --amend --no-edit
   amm = !git commit --amend
    mu = !git merge @{u} --no-ff --no-edit
@@ -82,9 +87,7 @@ hardu = !git reset --hard @{u} && git l1 && git s
    lf = !git lp --follow
    la = "!f(){ git lp -20 --all --author=\"${1-Baur}\"; }; f"
    lm = "!f(){ git lp --grep \"${1-strange}\"; }; f"
-   lw = !git lp --author=Baur --all --since='1 week ago'
-
-  rvm = !sh /d/GitHub/git-rebase-via-merge/git-rebase-via-merge.sh
+   lw = "!f(){ git lp --author=\"$(git config user.name)\" --all --since='1 week ago'; }; f"
 
  back = "!f(){ \
 name=$(git head)-backup/$(git time);\
@@ -94,7 +97,6 @@ echo $name;\
 
 
  copy = "!f(){ git merge $(git commit-tree ${1}^{tree} -p HEAD -m \"Tree copy from ${1}\"); }; f"
-
 
   com = "!f(){ \
 left=${1:-origin/develop};\
@@ -107,11 +109,13 @@ elif [[ $leftCount == 0 && $rightCount > 0 ]]; then echo "[$left] is parent for 
 else echo "they dont refer one another"; fi;\
 }; f"
 
- conf = !git config --global --edit
-   al = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/'
+  rvm = !sh /c/GitHub/git-rebase-via-merge/git-rebase-via-merge.sh
 
 debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PACK_ACCESS=2; GIT_TRACE_PACKET=2; GIT_TRACE_PACKFILE=2; GIT_TRACE_SETUP=2; GIT_TRACE_SHALLOW=2; git"
 
+  con = !git config --edit --local
+ cong = !git config --edit --global
+   al = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/'
 
 # https://stackoverflow.com/a/39616600/985457
    quote-string = "!read -r l; printf \\\"!; printf %s \"$l\" | sed 's/\\([\\\"]\\)/\\\\\\1/g'; printf \" #\\\"\\n\" #"
@@ -120,24 +124,23 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
 
 
 [core]
+#  editor = vim
   editor = "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
   whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
-#   excludesfile = 
+  autocrlf = true
   
 [credential]
   helper = manager
   modalPrompt = false
 
 [gpg]
-  program = "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
+#  program = "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
 
 [commit]
-  gpgsign = true
+#  gpgsign = true
 
 [color]
   ui = auto
-    
-# https://git-scm.com/docs/git-config
 
 [gc]
   auto = 0
@@ -155,6 +158,7 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
 
 [merge]
 # ff = 
+#  tool = vimdiff
   tool = vsdiffmerge
   guitool = vsdiffmerge
   conflictstyle = diff3
@@ -168,6 +172,7 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
   trustexistcode = true
 
 [diff]
+#  tool = vimdiff
   tool = vsdiffmerge
   guitool = vsdiffmerge
   mnemonicPrefix = true
@@ -189,9 +194,10 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
   enabled = 0
   autoupdate = 1
   # to clear rr cache
-  # rm -r .git/rr-cache
-  # introduce as alias?  
+  # rm -r .git/rr-cache 
   
+  
+  # https://git-scm.com/docs/git-config
   
   # examples
   # https://gist.github.com/tdd/470582
