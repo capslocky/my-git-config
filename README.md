@@ -4,9 +4,6 @@
 
 Alias | Description
 --- | ---
-git me | Show my username and email
-git or | Show origin url
-git v | Show git version
 git s | Show current branch and ahead/behind status
 git f | Fetch remote repository 'origin'
 git b | Show local branches
@@ -63,6 +60,10 @@ git noff john/ASD-335 |  Merge 'john/ASD-335', no fast-forward
 git temp | Create 'TEMP commit' from all uncommited changes
 git soft | Disassemble last commit into staging (typically to reverse 'git temp')
 git hardu | Do a hard reset of current branch to upstream
+git me | Show my username and email
+git or | Show 'origin' remote repository url
+git rem | Show all remote repositories
+git v | Show git version
 git cat d2f54a0 | Show commit metadata
 git time | Show date '2018-09-28_12-04-41' (used in 'git back')
 git udfh | Discard any changes in file 'SQL/UDF.xml' during merge conflict (project-specific)

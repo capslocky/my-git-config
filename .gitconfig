@@ -7,12 +7,9 @@
   user = capslocky
 
 [alias]
-  me  = !git config user.name && git config user.email 
-  or  = !git config remote.origin.url
-   v  = !git --version
-   s  = !git status -sb
-   f  = !git fetch origin --tags --prune && git s
-   b  = !git branch -lv
+    s = !git status -sb
+    f = !git fetch origin --tags --prune && git s
+    b = !git branch -lv
    br = !git branch -rv
    st = !git add -A && git s
    un = !git reset -q && git s
@@ -66,8 +63,12 @@
  temp = !git add -A && git commit -m 'TEMP commit'
  soft = !git reset --soft HEAD~1
 hardu = !git reset --hard @{u} && git l1 && git s
+   me = !git config user.name && git config user.email 
+   or = !git config remote.origin.url
+  rem = !git remote -v
+    v = !git --version
   cat = !git cat-file -p
-  
+
   time = !date +"%Y-%m-%d_%H-%M-%S"
 
 
