@@ -127,7 +127,8 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
 #  editor = vim
   editor = "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
   whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
-  autocrlf = true
+  eol = lf
+  autocrlf = false
   
 [credential]
   helper = manager
@@ -203,3 +204,8 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
   # https://gist.github.com/tdd/470582
   # https://gist.github.com/pksunkara/988716
   # https://gist.github.com/robmiller/6018582
+  
+  # creating a symlink on windows (in cmd as admin)
+  # rename %UserProfile%\.gitconfig .gitconfig_backup
+  # mklink %UserProfile%\.gitconfig c:\github\my-git-config\.gitconfig
+  
