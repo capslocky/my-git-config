@@ -14,13 +14,13 @@
    st = !git add -A && git s
    un = !git reset -q && git s
    m  = "!f(){ git commit -m \"$*\"; }; f"
-   mj = "!f(){ git commit -m \"$(git head | cut -c6-14): $*\"; }; f"                                   # PROJECT-SPECIFIC
+   mj = "!f(){ git commit -m \"$(git head | cut -c9-22): $*\"; }; f"                                   # PROJECT-SPECIFIC
  head = !git rev-parse --abbrev-ref HEAD
  prev = !git rev-parse --abbrev-ref @{-1}
   rel = !git branch -l | grep release/rc-1 | tail -1 && git branch -r | grep release/rc-1 | tail -1    # PROJECT-SPECIFIC
    c  = "!f(){ git checkout -q ${1}; git s; }; f"
    co = "!f(){ git checkout --track origin/${1}; }; f"
-   cn = !git checkout -b
+   cb = !git checkout -b
    cr = "!f(){ git checkout $(git rel | head -1); git s; }; f"                                         # PROJECT-SPECIFIC
   crr = "!f(){ git checkout --track $(git rel | tail -1); git s; }; f"                                 # PROJECT-SPECIFIC
    cp = !git checkout -q @{-1} && git s
@@ -35,10 +35,10 @@
    db = !git cm && git branch -d $(git prev)
   dbf = !git cm && git branch -D $(git prev)
    dr = !git push origin --delete $(git head)
-   du = !git diff
-   ds = !git diff --staged
-   da = !git diff HEAD
-   df = !git diff --stat
+   su = !git diff
+   ss = !git diff --staged
+   sa = !git diff HEAD
+   sf = !git diff HEAD --stat
   amn = !git commit --amend --no-edit
   amm = !git commit --amend
    mu = !git merge @{u} --no-ff --no-edit
@@ -110,7 +110,7 @@ elif [[ $leftCount == 0 && $rightCount > 0 ]]; then echo "[$left] is parent for 
 else echo "they dont refer one another"; fi;\
 }; f"
 
-  rvm = !sh /c/GitHub/git-rebase-via-merge/git-rebase-via-merge.sh
+  rvm = !sh /c/github/git-rebase-via-merge/git-rebase-via-merge.sh
 
 debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PACK_ACCESS=2; GIT_TRACE_PACKET=2; GIT_TRACE_PACKFILE=2; GIT_TRACE_SETUP=2; GIT_TRACE_SHALLOW=2; git"
 

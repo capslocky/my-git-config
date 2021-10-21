@@ -17,7 +17,7 @@ git prev | Show previous branch name
 git rel |  Show last local and remote release branches (project-specific)
 git c john/ASD-321 | Checkout existing local branch
 git co john/ASD-475 | Checkout remote branch from origin
-git cn  john/ASD-557 | Create and checkout new branch
+git cb  john/ASD-557 | Create and checkout new branch
 git cr | Checkout last local release branch (project-specific)
 git crr | Checkout last remote release branch (project-specific)
 git cp | Checkout previous branch
@@ -27,15 +27,15 @@ git ct | Checkout 'temp' branch here
 git ch 355c3ad | Cherry-pick commit 355c3ad
 git chc | Cherry-pick continue
 git cha | Cherry-pick abort
-git ph | Push head (create new branch on remote)
+git ph | Push head (create a new branch on remote)
 git pf | Push force
 git db | Delete current branch with switching to 'master'
 git dbf | The same, but force
 git dr | Delete remote branch (upstream) for current branch
-git du | Show only unstaged changes (diff between working copy and staging)
-git ds | Show only staged changes (diff between staging and head)
-git da | Show all uncommited changes (diff between working copy and head)
-git df | Show file change statistics
+git su | Show only unstaged changes (diff between working copy and staging)
+git ss | Show only staged changes (diff between staging and head)
+git sa | Show all uncommited changes (diff between working copy and head)
+git sf | Show file change statistics
 git amn | Amend last commit from staging
 git amm | The same but with message editing
 git mu | Merge upstream, no fast-forward
