@@ -14,7 +14,8 @@ git m Fixed button | Create a commit with given message (no quotation marks need
 git mj Fixed button | The same, but with prefix like 'ASD-335: '
 git head | Show current branch name
 git prev | Show previous branch name 
-git rel |  Show last local and remote release branches (project-specific)
+git relr | Show last remote release brance (project-specific)
+git rell | Show last local release branch (project-specific)
 git c john/ASD-321 | Checkout existing local branch
 git co john/ASD-475 | Checkout remote branch from origin
 git cb  john/ASD-557 | Create and checkout new branch
@@ -47,6 +48,7 @@ git mc | Merge continue
 git ma | Merge abort
 git ru | Rebase on upstream
 git rp | Rebase on previous branch
+git rr | Rebase on last remote release branch
 git rd | Rebase on origin/develop
 git rdt | Rebase on origin/develop automatically resolving conflicts with 'theirs' <br> (taking our changes from current branch)
 git rc | Rebase continue
@@ -56,6 +58,7 @@ git ff | Fast-forward current branch to upstream
 git fff | Fetch and fast-forward to upstream
 git ffd | Fast-forward 'develop' (without checkout)
 git ffm | Fast-forward 'master' (without checkout)
+git ffr | Fast-forward last local release branch (without checkout)
 git noff john/ASD-335 |  Merge 'john/ASD-335', no fast-forward
 git temp | Create 'TEMP commit' from all uncommited changes
 git soft | Disassemble last commit into staging (typically to reverse 'git temp')
