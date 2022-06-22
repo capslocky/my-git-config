@@ -1,11 +1,7 @@
 [user]
   name = Baur
-  email = xxx
-#  signingkey = xxx
+  email = github@streetmail.net
 
-[github]
-  user = capslocky
-  
 [alias]
     s = !git status -sb
     f = !git fetch origin --tags --prune && git s
@@ -13,21 +9,27 @@
    br = !git branch -rv
    st = !git add -A && git s
    un = !git reset -q && git s
+   
    m  = "!f(){ git commit -m \"$*\"; }; f"
-   mj = "!f(){ git commit -m \"$(git head | cut -c9-22): $*\"; }; f"      # PROJECT-SPECIFIC
+   mj = "!f(){ git commit -m \"$(git head | cut -c9-22): $*\"; }; f"         # PROJECT-SPECIFIC
+  amn = !git commit --amend --no-edit
+  amm = !git commit --amend
+  
  head = !git rev-parse --abbrev-ref HEAD
  prev = !git rev-parse --abbrev-ref @{-1}
- relr = !git branch -r | grep origin | grep release/ | cut -c 3- | tail -1              # PROJECT-SPECIFIC
- rell = !git branch -l | grep release/ | cut -c 3- | tail -1              # PROJECT-SPECIFIC
+ relr = !git branch -r | grep origin | grep release/ | cut -c 3- | tail -1   # PROJECT-SPECIFIC
+ rell = !git branch -l | grep release/ | cut -c 3- | tail -1                 # PROJECT-SPECIFIC
+ 
    c  = "!f(){ git checkout -q ${1}; git s; }; f"
    co = "!f(){ git checkout --track origin/${1}; }; f"
    cb = !git checkout -b
    cp = !git checkout -q @{-1} && git s
    cd = !git ffd && git checkout -q develop && git s
    cm = !git ffm && git checkout -q master && git s
-   cr = !git ffr && git checkout -q $(git rell) && git s                  # PROJECT-SPECIFIC
-  crr = !git checkout --track $(git relr) && git s                        # PROJECT-SPECIFIC
+   cr = !git ffr && git checkout -q $(git rell) && git s                     # PROJECT-SPECIFIC
+  crr = !git checkout --track $(git relr) && git s                           # PROJECT-SPECIFIC
    ct = !git checkout -B temp
+   
    ch = !git cherry-pick
   chc = !git cherry-pick --continue
   cha = !git cherry-pick --abort
@@ -37,12 +39,12 @@
   dbf = !git cm && git branch -D $(git prev)
    dr = !git push origin --delete $(git head)
    dm = !git branch --merged $(git relr) | egrep -v '(^\\*|master|develop|release)' | xargs -n1 git branch -D
+   
    su = !git diff
    ss = !git diff --staged
    sa = !git diff HEAD
    sf = !git diff HEAD --stat
-  amn = !git commit --amend --no-edit
-  amm = !git commit --amend
+  
    mu = !git merge @{u} --no-ff --no-edit
    mp = !git merge @{-1} --no-ff --no-edit
    md = !git merge origin/develop --no-edit
@@ -51,6 +53,7 @@
    mt = !git merge temp --no-edit
    mc = !git merge --continue
    ma = !git merge --abort
+   
    ru = !git rebase @{u}
    rp = !git rebase @{-1}
    rr = !git rebase $(git relr)
@@ -59,24 +62,27 @@
    rc = !git rebase --continue
    ra = !git rebase --abort
    ri = !git rebase -i
+   
    ff = !git merge @{u} --ff-only && git l1 && git s
   fff = !git f && git ff
   ffd = !git fetch . origin/develop:develop
   ffm = !git fetch . origin/master:master
   ffr = !git fetch . origin/$(git rell):$(git rell)
- noff = !git merge --no-ff --no-edit 
+ noff = !git merge --no-ff --no-edit
+
  temp = !git add -A && git commit -m 'TEMP commit'
  soft = !git reset --soft HEAD~1
 hardu = !git reset --hard @{u} && git l1 && git s
+
    me = !git config user.name && git config user.email
 setme = !git config user.name 'Baur' && git config user.email 'github@streetmail.net'
    or = !git config remote.origin.url
 confl = !git config --edit --local
 confg = !git config --edit --global
+
   rem = !git remote -v
     v = !git --version
   cat = !git cat-file -p
-
  time = !date +"%Y-%m-%d_%H-%M-%S"
 
 
@@ -93,55 +99,54 @@ confg = !git config --edit --global
    la = "!f(){ git lp -20 --all --author=\"${1-Baur}\"; }; f"
    lm = "!f(){ git lp --grep \"${1-strange}\"; }; f"
    lw = "!f(){ git lp --author=\"$(git config user.name)\" --all --since='1 week ago'; }; f"
+   
 
- back = "!f(){ \
-name=$(git head)-backup/$(git time);\
-git branch $name;\
-echo $name;\
+# SCRIPTS
+
+back = "!f(){ \
+  name=$(git head)-backup/$(git time);\
+  git branch $name;\
+  echo $name;\
 }; f" 
 
 
- copy = "!f(){ git merge $(git commit-tree ${1}^{tree} -p HEAD -m \"Tree copy from ${1}\"); }; f"
+copy = "!f(){ git merge $(git commit-tree ${1}^{tree} -p HEAD -m \"Tree copy from ${1}\"); }; f"
 
-  com = "!f(){ \
-left=${1:-$(git relr)};\
-right=${2:-$(git head)};\
-read leftCount rightCount <<< $(git rev-list --left-right --count $left...$right); echo;\
-echo "[$left] contains $leftCount unique commits" ;\
-echo "[$right] contains $rightCount unique commits" ;\
-if [[ $leftCount > 0 && $rightCount == 0 ]]; then echo "[$right] is parent for [$left]";\
-elif [[ $leftCount == 0 && $rightCount > 0 ]]; then echo "[$left] is parent for [$right]";\
-else echo "they dont refer one another"; fi;\
+
+com = "!f(){ \
+  left=${1:-$(git relr)};\
+  right=${2:-$(git head)};\
+  read leftCount rightCount <<< $(git rev-list --left-right --count $left...$right); echo;\
+  echo "[$left] contains $leftCount unique commits" ;\
+  echo "[$right] contains $rightCount unique commits" ;\
+  if [[ $leftCount > 0 && $rightCount == 0 ]]; then echo "[$right] is parent for [$left]";\
+  elif [[ $leftCount == 0 && $rightCount > 0 ]]; then echo "[$left] is parent for [$right]";\
+  else echo "they dont refer one another"; fi;\
 }; f"
 
-  rvm = !sh /c/github/git-rebase-via-merge/git-rebase-via-merge.sh
+
+rvm = !sh /c/github/git-rebase-via-merge/git-rebase-via-merge.sh
 
 debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PACK_ACCESS=2; GIT_TRACE_PACKET=2; GIT_TRACE_PACKFILE=2; GIT_TRACE_SETUP=2; GIT_TRACE_SHALLOW=2; git"
 
-   al = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/'
+al = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/'
+
 
 # https://stackoverflow.com/a/39616600/985457
-   quote-string = "!read -r l; printf \\\"!; printf %s \"$l\" | sed 's/\\([\\\"]\\)/\\\\\\1/g'; printf \" #\\\"\\n\" #"
-   quote-string-undo = "!read -r l; printf %s \"$l\" | sed 's/\\\\\\([\\\"]\\)/\\1/g'; printf \"\\n\" #"
+quote-string = "!read -r l; printf \\\"!; printf %s \"$l\" | sed 's/\\([\\\"]\\)/\\\\\\1/g'; printf \" #\\\"\\n\" #"
+quote-string-undo = "!read -r l; printf %s \"$l\" | sed 's/\\\\\\([\\\"]\\)/\\1/g'; printf \"\\n\" #"
 
 
 
 [core]
-#  editor = vim
-  editor = "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
+  editor = vim
   whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
   eol = lf
   autocrlf = false
-  
+
 [credential]
   helper = manager
   modalPrompt = false
-
-[gpg]
-#  program = "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
-
-[commit]
-#  gpgsign = true
 
 [color]
   ui = auto
@@ -151,8 +156,7 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
 
 [pull]
   ff = only
-#  rebase = true
-  
+
 [push]
   default = upstream
   followTags = true
@@ -161,46 +165,28 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
 #  autosquash = true
 
 [merge]
-# ff = 
-#  tool = vimdiff
-  tool = vsdiffmerge
-  guitool = vsdiffmerge
+  tool = vimdiff
   conflictstyle = diff3
 
 [mergetool]
   prompt = true
-  
-[mergetool "vsdiffmerge"]
-  cmd = 'C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/Common7/IDE/CommonExtensions/Microsoft/TeamFoundation/Team Explorer/vsdiffmerge.exe' $LOCAL $REMOTE $BASE $MERGED //ignorespace //m
-  keepbackup = false
-  trustexistcode = true
 
 [diff]
-#  tool = vimdiff
-  tool = vsdiffmerge
-  guitool = vsdiffmerge
+  tool = vimdiff
   mnemonicPrefix = true
   renames = true
-  
+
 [difftool]
   prompt = true
-  
-[difftool "vsdiffmerge"]
-  cmd = 'C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/Common7/IDE/CommonExtensions/Microsoft/TeamFoundation/Team Explorer/vsdiffmerge.exe' $LOCAL $REMOTE Source Target //ignorespace //t
-  keepbackup = false
-  trustexistcode = true
-  
+
 [log]
   abbrevCommit = true
   follow = true
 
 [rerere]
   enabled = 0
-  autoupdate = 1
-  # to clear rr cache
-  # rm -r .git/rr-cache 
-  
-  
+
+
   # https://git-scm.com/docs/git-config
   
   # examples
@@ -211,4 +197,3 @@ debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PA
   # creating a symlink on windows (in cmd as admin)
   # rename %UserProfile%\.gitconfig .gitconfig_backup
   # mklink %UserProfile%\.gitconfig c:\github\my-git-config\.gitconfig
-  
