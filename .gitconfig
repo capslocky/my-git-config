@@ -35,6 +35,7 @@
   cha = !git cherry-pick --abort
    ph = !git push -u origin HEAD
    pf = !git push --force-with-lease
+   pa = !git push --all && git push --tags
    db = !git cm && git branch -d $(git prev)
   dbf = !git cm && git branch -D $(git prev)
    dr = !git push origin --delete $(git head)
