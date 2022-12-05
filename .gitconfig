@@ -194,7 +194,12 @@ quote-string-undo = "!read -r l; printf %s \"$l\" | sed 's/\\\\\\([\\\"]\\)/\\1/
   # https://gist.github.com/tdd/470582
   # https://gist.github.com/pksunkara/988716
   # https://gist.github.com/robmiller/6018582
+
+  # creating a symlink on mac/linux
+  # ln -s ~/github/my-git-config/.gitconfig ~/.gitconfig
   
   # creating a symlink on windows (in cmd as admin)
   # rename %UserProfile%\.gitconfig .gitconfig_backup
   # mklink %UserProfile%\.gitconfig c:\github\my-git-config\.gitconfig
+
+
