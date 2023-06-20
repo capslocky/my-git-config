@@ -24,9 +24,9 @@
    co = "!f(){ git checkout --track origin/${1}; }; f"
    cb = !git checkout -b
    cp = !git checkout -q @{-1} && git s
-   cd = !git ffd && git checkout -q develop && git s
-   cm = !git ffm && git checkout -q master && git s
-   cr = !git ffr && git checkout -q $(git rell) && git s                     # PROJECT-SPECIFIC
+   cd = !git checkout -q develop && git s
+   cm = !git checkout -q main && git s
+   cr = !git checkout -q $(git rell) && git s                                # PROJECT-SPECIFIC
   crr = !git checkout --track $(git relr) && git s                           # PROJECT-SPECIFIC
    ct = !git checkout -B temp
    
@@ -39,7 +39,7 @@
    db = !git cm && git branch -d $(git prev)
   dbf = !git cm && git branch -D $(git prev)
    dr = !git push origin --delete $(git head)
-   dm = !git branch --merged $(git relr) | egrep -v '(^\\*|master|develop|release)' | xargs -n1 git branch -D
+   dm = !git branch --merged origin/main | egrep -v '(main|master|develop|release)' | xargs -n1 git branch -D
    
    su = !git diff
    ss = !git diff --staged
@@ -49,7 +49,7 @@
    mu = !git merge @{u} --no-ff --no-edit
    mp = !git merge @{-1} --no-ff --no-edit
    md = !git merge origin/develop --no-edit
-   mm = !git merge origin/master --no-edit
+   mm = !git ffm && git merge main --no-edit
    mr = !git merge $(git relr) --no-edit
    mt = !git merge temp --no-edit
    mc = !git merge --continue
@@ -57,7 +57,8 @@
    
    ru = !git rebase @{u}
    rp = !git rebase @{-1}
-   rr = !git rebase $(git relr)
+   rr = !git rebase $(git relr)   
+   rm = !git rebase origin/main
    rd = !git rebase origin/develop
   rdt = !git rebase origin/develop -X theirs
    rc = !git rebase --continue
@@ -67,7 +68,7 @@
    ff = !git merge @{u} --ff-only && git l1 && git s
   fff = !git f && git ff
   ffd = !git fetch . origin/develop:develop
-  ffm = !git fetch . origin/master:master
+  ffm = !git fetch . origin/main:main
   ffr = !git fetch . origin/$(git rell):$(git rell)
  noff = !git merge --no-ff --no-edit
 
@@ -115,7 +116,7 @@ copy = "!f(){ git merge $(git commit-tree ${1}^{tree} -p HEAD -m \"Tree copy fro
 
 
 com = "!f(){ \
-  left=${1:-$(git relr)};\
+  left=${1:-origin/main};\
   right=${2:-$(git head)};\
   read leftCount rightCount <<< $(git rev-list --left-right --count $left...$right); echo;\
   echo "[$left] contains $leftCount unique commits" ;\
@@ -126,7 +127,7 @@ com = "!f(){ \
 }; f"
 
 
-rvm = !sh /c/github/git-rebase-via-merge/git-rebase-via-merge.sh
+rvm = !sh ~/github/git-rebase-via-merge/git-rebase-via-merge.sh
 
 debug = "!GIT_TRACE=2; GIT_CURL_VERBOSE=2; GIT_TRACE_PERFORMANCE=2; GIT_TRACE_PACK_ACCESS=2; GIT_TRACE_PACKET=2; GIT_TRACE_PACKFILE=2; GIT_TRACE_SETUP=2; GIT_TRACE_SHALLOW=2; git"
 
